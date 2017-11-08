@@ -8,7 +8,9 @@
           <h3 class="title has-text-grey" v-show="isForgot">Forgot password</h3>
           <div class="box">
             <figure class="avatar">
-              <img src="https://placeimg.com/128/128/nature">
+              <router-link :to="{name: 'Home'}">
+                <img src="https://placeimg.com/128/128/nature">
+              </router-link>
             </figure>
             <transition name="fade" appear mode="out-in">
               <transition v-if="!isForgot" name="fade" appear mode="out-in">

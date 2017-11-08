@@ -16,7 +16,7 @@
         <b-field label="Content">
           <b-input
             type="textarea"
-            v-model="post.description"
+            v-model="post.content"
             placeholder="Write your content"
             required>
           </b-input>
@@ -33,10 +33,10 @@
 <script>
 import gql from 'graphql-tag'
 const createPost = gql`
-  mutation createPost($title: String!, $description: String!, $sendBy: ID!) {
-    createPost(title: $title,, description: $description, sendById: $sendBy) {
+  mutation createPost($title: String!, $content: String!, $sendBy: ID!) {
+    createPost(title: $title,, content: $content, sendById: $sendBy) {
       id
-      description
+      content
     }
   }
 `
@@ -52,7 +52,7 @@ export default {
     return {
       post: {
         title: 'GraphQL: A query language for your API',
-        description: null
+        content: null
       }
     }
   },
@@ -64,19 +64,19 @@ export default {
   methods: {
     save () {
       const _self = this
-      if (!this.post.description && !this.post.title) return
+      if (!this.post.content && !this.post.title) return
       // by user
-      const description = this.post.description
+      const content = this.post.content
       const title = this.post.title
       const sendBy = this.user.id
       // reset content
-      this.post.description = ''
+      this.post.content = ''
       this.post.title = ''
       // Mutation
       this.$apollo.mutate({
         mutation: createPost,
         variables: {
-          description,
+          content,
           title,
           sendBy
         }

@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="content article-body">
-        {{post.description}}
+        {{post.content}}
       </div>
     </div>
   </div>

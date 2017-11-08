@@ -11,17 +11,17 @@
           </h2>
         </div>
       </div>
-      <nav-app></nav-app>
+      <app-nav></app-nav>
     </section>
   </div>
 </template>
 
 <script>
-import NavApp from './header/Nav.vue'
+import appNav from './nav.vue'
 
 export default {
   components: {
-    NavApp
+    appNav
   }
 }
 </script>

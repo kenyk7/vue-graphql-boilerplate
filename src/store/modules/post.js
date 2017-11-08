@@ -10,7 +10,7 @@ let postsSubscriptionObserver
 
 const state = {
   hasMore: true,
-  perPage: 2,
+  perPage: 7,
   posts: [], // {}
   newPosts: [] // {}
 }

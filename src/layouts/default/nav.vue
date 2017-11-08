@@ -35,7 +35,7 @@
           </a>
         </li>
       </ul>
-      <b-modal :active.sync="activeTweetForm" has-modal-card>
+      <b-modal v-if="user" :active.sync="activeTweetForm" has-modal-card>
         <modal-post></modal-post>
       </b-modal>
     </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import modalPost from '../ModalPost'
+import modalPost from '@/components/ModalPost.vue'
 export default {
   components: {
     modalPost

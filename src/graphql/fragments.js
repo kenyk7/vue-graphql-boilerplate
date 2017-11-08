@@ -4,7 +4,7 @@ export const fieldsPosts = gql`
   fragment fieldsPosts on Post {
     id
     title
-    description
+    content
     createdAt
     sendBy{
       id

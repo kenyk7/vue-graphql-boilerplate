@@ -1,17 +1,19 @@
 <template>
   <main>
-    <header-app v-if="!isLogin"></header-app>
     <transition name="fade" appear mode="out-in">
-      <router-view></router-view>
+      <tpl-blank v-if="isLogin"></tpl-blank>
+      <tpl-default v-else></tpl-default>
     </transition>
   </main>
 </template>
 
 <script>
-import HeaderApp from './components/Header.vue'
+import tplDefault from './layouts/default.vue'
+import tplBlank from './layouts/blank.vue'
 export default {
   components: {
-    HeaderApp
+    tplDefault,
+    tplBlank
   },
   data () {
     return {
