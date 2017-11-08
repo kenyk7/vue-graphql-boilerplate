@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <div class="tabs is-centered is-boxed">
+      <ul>
+        <router-link tag="li" :to="{name: 'Home'}" exact active-class="is-active">
+          <a>
+            <span class="icon">
+              <i class="fa fa-home"></i>
+            </span>
+            <span>Home</span>
+          </a>
+        </router-link>
+        <router-link v-if="!user" tag="li" :to="{name: 'Login'}" active-class="is-active">
+          <a>
+            <span class="icon">
+              <i class="fa fa-sign-in"></i>
+            </span>
+            <span>Login</span>
+          </a>
+        </router-link>
+        <router-link v-else tag="li" :to="{name: 'Profile'}" active-class="is-active">
+          <a>
+            <span class="icon">
+              <i class="fa fa-user"></i>
+            </span>
+            <span>{{user.username}}</span>
+          </a>
+        </router-link>
+        <li v-if="user">
+          <a @click.prevent="activeTweetForm = true">
+            <span class="icon">
+              <i class="fa fa-plus"></i>
+            </span>
+            <span>New post</span>
+          </a>
+        </li>
+      </ul>
+      <b-modal :active.sync="activeTweetForm" has-modal-card>
+        <modal-post></modal-post>
+      </b-modal>
+    </div>
+  </div>
+</template>
+
+<script>
+import modalPost from '../ModalPost'
+export default {
+  components: {
+    modalPost
+  },
+  data () {
+    return {
+      activeTweetForm: false
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.state.userAuth
+    }
+  }
+}
+</script>
