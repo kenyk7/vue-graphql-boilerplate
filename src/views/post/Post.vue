@@ -46,6 +46,7 @@ export default{
   },
   methods: {
     deletePost () {
+      const _self = this
       // Mutation
       this.$apollo.mutate({
         mutation: deletePost,
@@ -58,9 +59,12 @@ export default{
           message: 'Delete post',
           type: 'is-success'
         })
-        updateFakeUser(this.$apollo, this.user.id)
-        // remove local if failed websocket
-        this.$store.commit('DELETE_POST', this.post)
+        if (this.user) {
+          const userId = this.user.id
+          if (this.post.sendBy.id === userId) {
+            updateFakeUser(_self.$apollo, userId)
+          }
+        }
       }).catch((error) => {
         // Error
         console.log(error)
