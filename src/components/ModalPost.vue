@@ -32,6 +32,8 @@
 
 <script>
 import gql from 'graphql-tag'
+import updateFakeUser from '@/helpers/updateFakeUser'
+
 const createPost = gql`
   mutation createPost($title: String!, $content: String!, $sendBy: ID!) {
     createPost(title: $title,, content: $content, sendById: $sendBy) {
@@ -40,18 +42,12 @@ const createPost = gql`
     }
   }
 `
-const updateUserFake = gql`
-  mutation updateUser($id: ID!) {
-    updateUser(id: $id, dummy: "dummy") {
-      id
-    }
-  }
-`
+
 export default {
   data () {
     return {
       post: {
-        title: 'GraphQL: A query language for your API',
+        title: null,
         content: null
       }
     }
@@ -63,7 +59,6 @@ export default {
   },
   methods: {
     save () {
-      const _self = this
       if (!this.post.content && !this.post.title) return
       // by user
       const content = this.post.content
@@ -86,16 +81,7 @@ export default {
           message: 'Send post',
           type: 'is-success'
         })
-        setTimeout(() => {
-          // fake mutate
-          // for update user auth
-          _self.$apollo.mutate({
-            mutation: updateUserFake,
-            variables: {
-              id: _self.user.id
-            }
-          })
-        }, 700)
+        updateFakeUser(this.$apollo, this.user.id)
       }).catch((error) => {
         // Error
         console.log(error)

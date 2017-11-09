@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="forgot">
+  <form @submit.prevent="forgotF">
     <div class="field">
       <div class="control">
         <input class="input is-large" v-model="auth.email" type="email" placeholder="Email">
@@ -20,6 +20,9 @@ export default {
     }
   },
   methods: {
+    forgotF () {
+      console.log('comming soon')
+    },
     forgot () {
       if (!this.auth.email) return
       // Mutation
@@ -31,14 +34,14 @@ export default {
         }
       }).then((res) => {
         this.$toast.open({
-          message: 'Login Success',
+          message: 'Forgot Success',
           type: 'is-success'
         })
         this.$router.push({name: 'Home'})
       }).catch((error) => {
         console.error(error)
         this.$toast.open({
-          message: 'Error login',
+          message: 'Error forgot',
           type: 'is-danger'
         })
       })

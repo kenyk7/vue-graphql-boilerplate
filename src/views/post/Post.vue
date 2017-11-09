@@ -24,6 +24,7 @@
 </template>
 <script>
 import gql from 'graphql-tag'
+import updateFakeUser from '@/helpers/updateFakeUser'
 const deletePost = gql`
   mutation deletePost($id: ID!) {
     deletePost(id: $id) {
@@ -36,6 +37,11 @@ export default{
     post: {
       type: Object,
       default: () => {}
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.state.userAuth
     }
   },
   methods: {
@@ -52,6 +58,9 @@ export default{
           message: 'Delete post',
           type: 'is-success'
         })
+        updateFakeUser(this.$apollo, this.user.id)
+        // remove local if failed websocket
+        this.$store.commit('DELETE_POST', this.post)
       }).catch((error) => {
         // Error
         console.log(error)

@@ -23,7 +23,7 @@ networkInterface.use([{
         Authorization: GC_AUTH_TOKEN
       }
     }
-    req.options.headers['x-graphcool-source'] = 'app:SocialGraphQl'
+    req.options.headers['x-graphcool-source'] = 'app:SimpleBlog'
     next()
   }
 }])

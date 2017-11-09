@@ -49,6 +49,7 @@ const mutations = {
   },
   DELETE_POST (state, post) {
     Vue.delete(state.posts, post.id)
+    Vue.delete(state.newPosts, post.id)
   }
 }
 

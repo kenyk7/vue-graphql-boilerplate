@@ -25,3 +25,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.title{
+  font-weight: 300;
+}
+.subtitle{
+  font-weight: 300;
+}
+</style>
