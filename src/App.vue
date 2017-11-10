@@ -29,7 +29,7 @@ export default {
     }
   },
   created () {
-    const {userLs, $store} = this
+    const { userLs, $store } = this
     if (userLs) {
       $store.commit('setAuth', true)
     } else {
