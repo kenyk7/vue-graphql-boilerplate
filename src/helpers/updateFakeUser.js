@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import apollo from '@/apollo'
 
 const updateUserFake = gql`
   mutation updateUser($id: ID!) {
@@ -8,7 +9,7 @@ const updateUserFake = gql`
   }
 `
 
-export default function (apollo, userId) {
+export default function (userId) {
   // fake mutate for update user auth
   apollo.mutate({
     mutation: updateUserFake,

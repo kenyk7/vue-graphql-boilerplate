@@ -24,23 +24,24 @@ export default {
       console.log('comming soon')
     },
     forgot () {
-      if (!this.auth.email) return
+      const { auth, $apollo, $toast, $router } = this
+      if (!auth.email) return
       // Mutation
-      const email = this.auth.email
-      this.$apollo.mutate({
+      const email = auth.email
+      $apollo.mutate({
         mutation: forgot,
         variables: {
           email
         }
       }).then((res) => {
-        this.$toast.open({
+        $toast.open({
           message: 'Forgot Success',
           type: 'is-success'
         })
-        this.$router.push({name: 'Home'})
+        $router.push({name: 'Home'})
       }).catch((error) => {
         console.error(error)
-        this.$toast.open({
+        $toast.open({
           message: 'Error forgot',
           type: 'is-danger'
         })

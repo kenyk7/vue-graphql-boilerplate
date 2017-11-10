@@ -59,16 +59,17 @@ export default {
   },
   methods: {
     save () {
-      if (!this.post.content && !this.post.title) return
+      const { post, user, $apollo, $toast } = this
+      if (!post.content && !post.title) return
       // by user
-      const content = this.post.content
-      const title = this.post.title
-      const sendBy = this.user.id
+      const content = post.content
+      const title = post.title
+      const sendBy = user.id
       // reset content
-      this.post.content = ''
-      this.post.title = ''
+      post.content = ''
+      post.title = ''
       // Mutation
-      this.$apollo.mutate({
+      $apollo.mutate({
         mutation: createPost,
         variables: {
           content,
@@ -77,15 +78,15 @@ export default {
         }
       }).then((data) => {
         // Result
-        this.$toast.open({
+        $toast.open({
           message: 'Send post',
           type: 'is-success'
         })
-        updateFakeUser(this.$apollo, this.user.id)
+        updateFakeUser(user.id)
       }).catch((error) => {
         // Error
         console.log(error)
-        this.$toast.open({
+        $toast.open({
           message: 'Error!',
           type: 'is-danger'
         })

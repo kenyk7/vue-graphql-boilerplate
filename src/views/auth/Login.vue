@@ -33,28 +33,29 @@ export default {
   },
   methods: {
     login () {
-      if (!this.auth.email && !this.auth.password) return
+      const { auth, $apollo, $ls, $toast, $store, $router } = this
+      if (!auth.email && !auth.password) return
       // Mutation
-      const email = this.auth.email
-      const password = this.auth.password
-      this.$apollo.mutate({
+      const email = auth.email
+      const password = auth.password
+      $apollo.mutate({
         mutation: login,
         variables: {
           email,
           password
         }
       }).then((res) => {
-        this.$ls.set('GC_AUTH_TOKEN', res.data.signinUser.token)
-        this.$ls.set('GC_AUTH_USER', res.data.signinUser.user)
-        this.$toast.open({
+        $ls.set('GC_AUTH_TOKEN', res.data.signinUser.token)
+        $ls.set('GC_AUTH_USER', res.data.signinUser.user)
+        $toast.open({
           message: 'Login Success',
           type: 'is-success'
         })
-        this.$store.commit('setAuth', true)
-        this.$router.push({name: 'Home'})
+        $store.commit('setAuth', true)
+        $router.push({name: 'Home'})
       }).catch((error) => {
         console.error(error)
-        this.$toast.open({
+        $toast.open({
           message: 'Error login',
           type: 'is-danger'
         })

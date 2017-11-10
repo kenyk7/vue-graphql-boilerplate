@@ -39,13 +39,14 @@ export default {
   },
   methods: {
     createUser () {
-      if (!this.auth.email && !this.auth.password) return
+      const { auth, $apollo, $ls, $toast, $store, $router } = this
+      if (!auth.email && !auth.password) return
       // Mutation
-      const email = this.auth.email
+      const email = auth.email
       const getUsername = email.split('@')[0]
-      const username = this.auth.username || getUsername
-      const password = this.auth.password
-      this.$apollo.mutate({
+      const username = auth.username || getUsername
+      const password = auth.password
+      $apollo.mutate({
         mutation: createAndLoginUser,
         variables: {
           username,
@@ -53,18 +54,18 @@ export default {
           password
         }
       }).then((res) => {
-        this.$ls.set('GC_AUTH_TOKEN', res.data.signinUser.token)
-        this.$ls.set('GC_AUTH_USER', res.data.signinUser.user)
-        this.$toast.open({
+        $ls.set('GC_AUTH_TOKEN', res.data.signinUser.token)
+        $ls.set('GC_AUTH_USER', res.data.signinUser.user)
+        $toast.open({
           message: 'User create and login success',
           type: 'is-success'
         })
-        this.$store.commit('setAuth', true)
-        this.$router.push({name: 'Home'})
+        $store.commit('setAuth', true)
+        $router.push({name: 'Home'})
       }).catch((error) => {
         // Error
         console.error(error)
-        this.$toast.open({
+        $toast.open({
           message: 'Error User exists',
           type: 'is-danger'
         })

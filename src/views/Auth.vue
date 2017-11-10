@@ -57,9 +57,9 @@ export default {
     }
   },
   mounted () {
-    const _self = this
+    const { $router } = this
     if (this.user) {
-      _self.$router.push({name: 'Home'})
+      $router.push({name: 'Home'})
     }
   }
 }
@@ -69,7 +69,6 @@ export default {
   background: #F2F6FA;
 }
 .hero .nav, .hero.is-success .nav {
-  -webkit-box-shadow: none;
   box-shadow: none;
 }
 .box {
@@ -83,7 +82,6 @@ export default {
   padding: 5px;
   background: #fff;
   border-radius: 50%;
-  -webkit-box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
   box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
 }
 input {

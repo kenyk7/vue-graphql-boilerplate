@@ -46,29 +46,29 @@ export default{
   },
   methods: {
     deletePost () {
-      const _self = this
+      const { $apollo, $toast, post, user } = this
       // Mutation
-      this.$apollo.mutate({
+      $apollo.mutate({
         mutation: deletePost,
         variables: {
-          id: this.post.id
+          id: post.id
         }
       }).then((data) => {
         // Result
-        this.$toast.open({
+        $toast.open({
           message: 'Delete post',
           type: 'is-success'
         })
-        if (this.user) {
-          const userId = this.user.id
-          if (this.post.sendBy.id === userId) {
-            updateFakeUser(_self.$apollo, userId)
+        if (user) {
+          const userId = user.id
+          if (post.sendBy.id === userId) {
+            updateFakeUser(userId)
           }
         }
       }).catch((error) => {
         // Error
         console.log(error)
-        this.$toast.open({
+        $toast.open({
           message: 'Error!',
           type: 'is-danger'
         })

@@ -29,31 +29,31 @@ export default {
     }
   },
   created () {
-    const _self = this
-    if (this.userLs) {
-      _self.$store.commit('setAuth', true)
+    const {userLs, $store} = this
+    if (userLs) {
+      $store.commit('setAuth', true)
     } else {
-      _self.$store.commit('setAuth', false)
+      $store.commit('setAuth', false)
     }
-    _self.$store.dispatch('getPosts', {after: null})
-    _self.$store.dispatch('subscribeToPosts')
+    $store.dispatch('getPosts', {after: null})
+    $store.dispatch('subscribeToPosts')
   },
   methods: {
     getAllData () {
-      const _self = this
-      const userLs = this.$ls.get('GC_AUTH_USER')
+      const { $ls, $store } = this
+      const userLs = $ls.get('GC_AUTH_USER')
       const payload = {
         userAuth: userLs.id
       }
-      _self.$store.dispatch('getUser', payload)
-      _self.$store.dispatch('subscribeToUserAuth', payload)
+      $store.dispatch('getUser', payload)
+      $store.dispatch('subscribeToUserAuth', payload)
     }
   },
   watch: {
     isAuth (to, from) {
-      const _self = this
+      const { getAllData } = this
       if (to) {
-        _self.getAllData()
+        getAllData()
       }
     }
   }
