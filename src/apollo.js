@@ -1,8 +1,8 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
+import {GC_ID_PROYECT, AUTH_TOKEN_NAME} from './consts'
 
-const GC_ID_PROYECT = 'cj9qcgr5jdk3s0122ycudinvn'
-const GC_AUTH_TOKEN = 'Bearer ' + localStorage.getItem('GC_AUTH_TOKEN')
+const GC_AUTH_TOKEN = 'Bearer ' + localStorage.getItem(AUTH_TOKEN_NAME)
 
 // YOUR_GRAPH_QL_ENDPOINT_HERE
 const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/' + GC_ID_PROYECT, {

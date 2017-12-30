@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     user () {
-      return this.$store.state.userAuth
+      return this.$store.getters.me
     }
   },
   methods: {

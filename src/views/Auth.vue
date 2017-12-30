@@ -50,17 +50,6 @@ export default {
       isLogin: true,
       isForgot: false
     }
-  },
-  computed: {
-    user () {
-      return this.$store.getters.user
-    }
-  },
-  mounted () {
-    const { $router } = this
-    if (this.user) {
-      $router.push({name: 'Home'})
-    }
   }
 }
 </script>

@@ -5,6 +5,8 @@ import Home from '@/views/Home'
 import Auth from '@/views/Auth'
 import Profile from '@/views/Profile'
 
+import { getToken, isTokenExpired, logout } from '@/helpers/authHelpers'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -39,11 +41,23 @@ const router = new Router({
       name: 'Login',
       component: Auth,
       beforeEnter: (to, from, next) => {
-        if (Vue.ls.get('GC_AUTH_USER')) {
+        if (getToken()) {
           next({name: 'Home'})
         }
         next()
       }
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      beforeEnter (to, from, next) {
+        logout()
+        next({name: 'Home'})
+      }
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
@@ -51,7 +65,8 @@ const router = new Router({
 // http://router.vuejs.org/en/advanced/meta.html
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.auth)) {
-    if (!Vue.ls.get('GC_AUTH_USER')) {
+    if (isTokenExpired()) {
+      logout()
       next({
         name: 'Login',
         query: {

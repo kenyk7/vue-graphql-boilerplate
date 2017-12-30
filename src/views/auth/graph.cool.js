@@ -27,12 +27,7 @@ export const createAndLoginUser = gql`
       email: $email
       password: $password
     }){
-      token,
-      user{
-        id
-        email
-        username
-      }
+      token
     }
   }
 `
@@ -43,12 +38,7 @@ export const login = gql`
       email: $email
       password: $password
     }) {
-      token,
-      user{
-        id
-        email
-        username
-      }
+      token
     }
   }
 `

@@ -22,7 +22,7 @@
           </div>
           <br>
           <p>
-            <button class="button is-primary" type="button" @click="logout">Logout</button>
+            <router-link class="button is-primary" :to="{name: 'Logout'}">Logout</router-link>
           </p>
         </div>
       </div>
@@ -31,24 +31,10 @@
 </template>
 
 <script>
-import jwtDecode from 'jwt-decode'
-
 export default {
   computed: {
     user () {
-      return this.$store.getters.user
-    }
-  },
-  mounted () {
-    this.token = jwtDecode(this.$ls.get('GC_AUTH_TOKEN'))
-  },
-  methods: {
-    logout () {
-      this.$store.commit('setAuth', false)
-      this.$store.commit('SET_USER', null)
-      this.$ls.remove('GC_AUTH_TOKEN')
-      this.$ls.remove('GC_AUTH_USER')
-      this.$router.push({name: 'Login'})
+      return this.$store.getters.me
     }
   }
 }

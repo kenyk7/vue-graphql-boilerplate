@@ -10,15 +10,13 @@
 <script>
 import tplDefault from './layouts/default.vue'
 import tplBlank from './layouts/blank.vue'
+import * as types from './store/types'
+import { getUserToken } from './helpers/authHelpers'
+
 export default {
   components: {
     tplDefault,
     tplBlank
-  },
-  data () {
-    return {
-      userLs: this.$ls.get('GC_AUTH_USER')
-    }
   },
   computed: {
     isLogin () {
@@ -29,21 +27,23 @@ export default {
     }
   },
   created () {
-    const { userLs, $store } = this
-    if (userLs) {
-      $store.commit('setAuth', true)
+    const { $store, setAuth } = this
+    if (getUserToken()) {
+      setAuth(true)
     } else {
-      $store.commit('setAuth', false)
+      setAuth(false)
     }
     $store.dispatch('getPosts', {after: null})
     $store.dispatch('subscribeToPosts')
   },
   methods: {
+    setAuth (val) {
+      this.$store.commit(types.SET_AUTH, val)
+    },
     getAllData () {
-      const { $ls, $store } = this
-      const userLs = $ls.get('GC_AUTH_USER')
+      const { $store } = this
       const payload = {
-        userAuth: userLs.id
+        userAuth: getUserToken().userId
       }
       $store.dispatch('getUser', payload)
       $store.dispatch('subscribeToUserAuth', payload)

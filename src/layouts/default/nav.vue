@@ -10,7 +10,7 @@
             <span>Home</span>
           </a>
         </router-link>
-        <router-link v-if="!user" tag="li" :to="{name: 'Login'}" active-class="is-active">
+        <router-link v-if="!isAuth" tag="li" :to="{name: 'Login'}" active-class="is-active">
           <a>
             <span class="icon">
               <i class="fa fa-sign-in"></i>
@@ -26,7 +26,7 @@
             <span>{{user.username}}</span>
           </a>
         </router-link>
-        <li v-if="user">
+        <li v-if="isAuth">
           <a @click.prevent="activeTweetForm = true">
             <span class="icon">
               <i class="fa fa-plus"></i>
@@ -35,7 +35,7 @@
           </a>
         </li>
       </ul>
-      <b-modal v-if="user" :active.sync="activeTweetForm" has-modal-card>
+      <b-modal v-if="isAuth" :active.sync="activeTweetForm" has-modal-card>
         <modal-post></modal-post>
       </b-modal>
     </div>
@@ -54,8 +54,11 @@ export default {
     }
   },
   computed: {
+    isAuth () {
+      return this.$store.getters.isAuth
+    },
     user () {
-      return this.$store.state.userAuth
+      return this.$store.getters.me
     }
   }
 }

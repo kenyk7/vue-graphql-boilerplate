@@ -2,19 +2,13 @@
   <form @submit.prevent="login">
     <div class="field">
       <div class="control">
-        <input class="input is-large" v-model="auth.email" type="email" placeholder="Email">
+        <input class="input is-large" v-model.trim="auth.email" type="email" placeholder="Email" required>
       </div>
     </div>
     <div class="field">
       <div class="control">
-        <input class="input is-large" v-model="auth.password" type="password" placeholder="Password">
+        <input class="input is-large" v-model.trim="auth.password" type="password" placeholder="Password" required>
       </div>
-    </div>
-    <div class="field">
-      <label class="checkbox">
-        <input type="checkbox">
-        Remember me
-      </label>
     </div>
     <button type="submit" class="button is-primary is-block is-large" style="width:100%">Login</button>
   </form>
@@ -22,6 +16,9 @@
 
 <script>
 import { login } from './graph.cool.js'
+import { AUTH_TOKEN_NAME } from '@/consts'
+import * as types from '@/store/types'
+
 export default {
   data () {
     return {
@@ -33,7 +30,8 @@ export default {
   },
   methods: {
     login () {
-      const { auth, $apollo, $ls, $toast, $store, $router } = this
+      const { auth, $apollo, $toast, $store, $router, $ls } = this
+      const redirect = this.$route.query.redirect
       if (!auth.email && !auth.password) return
       // Mutation
       const email = auth.email
@@ -45,14 +43,17 @@ export default {
           password
         }
       }).then((res) => {
-        $ls.set('GC_AUTH_TOKEN', res.data.signinUser.token)
-        $ls.set('GC_AUTH_USER', res.data.signinUser.user)
         $toast.open({
           message: 'Login Success',
           type: 'is-success'
         })
-        $store.commit('setAuth', true)
-        $router.push({name: 'Home'})
+        $ls.set(AUTH_TOKEN_NAME, res.data.signinUser.token)
+        $store.commit(types.SET_AUTH, true)
+        if (redirect) {
+          $router.push({path: redirect})
+        } else {
+          $router.push({name: 'Home'})
+        }
       }).catch((error) => {
         console.error(error)
         $toast.open({
